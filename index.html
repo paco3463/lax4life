@@ -1,0 +1,1368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stone Crabs Lacrosse Club | Miami Youth Lacrosse U10–U17</title>
+<meta name="description" content="Stone Crabs Lacrosse Club: spring, summer and winter lacrosse programs for Miami players U10 to U17. Register online.">
+<meta name="theme-color" content="#00482A">
+<meta property="og:title" content="Stone Crabs Lacrosse Club">
+<meta property="og:description" content="Spring, summer and winter lacrosse for Miami players U10–U17.">
+<meta property="og:image" content="assets/logo.png">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Big+Shoulders+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   STONE CRABS LACROSSE CLUB
+   Colors are pulled from the club logo.
+   ============================================================ */
+:root{
+  --mangrove:#012B19;     /* deepest green, dark sections */
+  --everglade:#00482A;    /* logo outline green */
+  --turf:#0B6B3E;         /* lighter green accents */
+  --crab:#F0561E;         /* logo orange */
+  --crab-deep:#D2440E;    /* orange hover / pressed */
+  --shell:#FAFBF7;        /* page background */
+  --sand:#EEF1E8;         /* alt light section */
+  --ink:#0E2117;          /* body text on light */
+  --muted:#4C5E54;        /* secondary text on light */
+  --line:rgba(0,72,42,.16);
+  --on-dark:#F4F7F1;
+  --on-dark-muted:#A9BDB1;
+
+  --display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body:"Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --notch:18px;           /* clipped corner, like a jersey number plate */
+  --wrap:1200px;
+  --gutter:clamp(16px, 4vw, 40px);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html.lock, html.lock body{overflow:hidden;height:100%}
+body{
+  margin:0;background:var(--shell);color:var(--ink);
+  font-family:var(--body);font-size:1.0625rem;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--crab);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.skip{position:absolute;left:-999px;top:8px;z-index:200;background:var(--crab);color:#fff;padding:10px 16px;font-weight:700}
+.skip:focus{left:8px}
+
+h1,h2,h3{font-family:var(--display);line-height:.95;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(2.6rem, 6vw, 4.75rem);font-weight:800;text-transform:uppercase}
+h3{font-size:1.75rem;font-weight:800;text-transform:uppercase}
+p{margin:0 0 1em}
+.lede{font-size:1.2rem;color:var(--muted);max-width:60ch}
+.dark .lede{color:var(--on-dark-muted)}
+
+/* ---------- Buttons ---------- */
+.btn{
+  --bg:var(--crab);--fg:#fff;
+  display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  min-height:52px;padding:0 28px;border:0;cursor:pointer;text-decoration:none;
+  background:var(--bg);color:var(--fg);
+  font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:.04em;text-transform:uppercase;
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  transition:background .2s var(--ease), transform .2s var(--ease);
+}
+.btn:hover{--bg:var(--crab-deep)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{--bg:transparent;--fg:currentColor;box-shadow:inset 0 0 0 2px currentColor;clip-path:none}
+.btn.ghost:hover{--bg:rgba(255,255,255,.08)}
+.light .btn.ghost:hover{--bg:rgba(0,72,42,.06)}
+.btn.small{min-height:42px;padding:0 18px;font-size:1.05rem}
+.btn[disabled]{opacity:.6;cursor:progress}
+
+/* ============================================================
+   INTRO LOADER: video → white wash → logo → site
+   ============================================================ */
+#intro{
+  position:fixed;inset:0;z-index:100;background:#000;overflow:hidden;
+  display:grid;place-items:center;
+  transition:opacity .9s var(--ease), visibility .9s;
+}
+#intro .backdrop{
+  position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);
+  object-fit:cover;filter:blur(36px) saturate(1.2) brightness(.7);transform:scale(1.1);
+}
+#intro .main{
+  position:relative;height:100%;width:auto;max-width:100%;
+  aspect-ratio:9/16;object-fit:cover;
+  box-shadow:0 0 120px rgba(0,0,0,.6);
+}
+@media (max-aspect-ratio:9/16), (max-width:640px) and (orientation:portrait){
+  #intro .main{width:100%;height:100%;aspect-ratio:auto}
+  #intro .backdrop{display:none}
+}
+#intro .white{
+  position:absolute;inset:0;background:#fff;opacity:0;transition:opacity .45s ease;
+  display:grid;place-items:center;
+}
+#intro .logo-mark{
+  width:min(60vw, 280px);opacity:0;transform:scale(.6) rotate(-8deg);
+  transition:opacity .5s var(--ease), transform .8s cubic-bezier(.2,1.4,.3,1);
+}
+#intro .tagline{
+  position:absolute;left:0;right:0;bottom:calc(50% - min(30vw,140px) - 56px);
+  text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(1.1rem,3vw,1.5rem);
+  letter-spacing:.12em;color:var(--everglade);opacity:0;transform:translateY(10px);
+  transition:opacity .5s .35s var(--ease), transform .5s .35s var(--ease);
+}
+#intro.to-white .white{opacity:1}
+#intro.logo-in .logo-mark{opacity:1;transform:none}
+#intro.logo-in .tagline{opacity:1;transform:none}
+#intro.out{opacity:0;visibility:hidden}
+#intro .intro-ui{
+  position:absolute;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:3;
+  transition:opacity .3s;
+}
+#intro.to-white .intro-ui{opacity:0;pointer-events:none}
+.intro-btn{
+  border:0;cursor:pointer;background:rgba(0,0,0,.45);color:#fff;backdrop-filter:blur(6px);
+  padding:10px 16px;font-weight:600;font-size:.95rem;border-radius:999px;
+}
+.intro-btn:hover{background:rgba(0,0,0,.65)}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header{
+  position:sticky;top:0;z-index:50;background:rgba(1,43,25,.92);backdrop-filter:blur(10px);
+  color:var(--on-dark);border-bottom:1px solid rgba(255,255,255,.08);
+}
+.site-header .wrap{display:flex;align-items:center;gap:24px;min-height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;margin-right:auto}
+.brand img{width:52px;height:52px}
+.brand span{font-family:var(--display);font-weight:800;font-size:1.45rem;line-height:.9;text-transform:uppercase}
+.brand small{display:block;font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.06em;color:var(--on-dark-muted);text-transform:none}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{
+  text-decoration:none;font-weight:600;font-size:1rem;padding:10px 12px;color:var(--on-dark);
+  border-bottom:2px solid transparent;
+}
+.nav a:hover{border-bottom-color:var(--crab)}
+.nav .btn{margin-left:10px}
+.menu-toggle{display:none;background:none;border:0;color:var(--on-dark);padding:10px;cursor:pointer}
+.menu-toggle svg{width:28px;height:28px}
+@media (max-width:960px){
+  .menu-toggle{display:block}
+  .nav{
+    position:fixed;inset:72px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--mangrove);padding:8px var(--gutter) 24px;
+    transform:translateY(-12px);opacity:0;visibility:hidden;transition:all .25s var(--ease);
+    border-bottom:4px solid var(--crab);
+  }
+  .nav.open{transform:none;opacity:1;visibility:visible}
+  .nav a{padding:14px 4px;border-bottom:1px solid rgba(255,255,255,.08);font-size:1.15rem}
+  .nav .btn{margin:16px 0 0}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;background:var(--everglade);color:var(--on-dark);overflow:hidden;
+  padding:clamp(48px,8vw,96px) 0 0;
+}
+.hero::before{ /* faint field lines */
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 1px), #fff calc(50% - 1px), #fff calc(50% + 1px), transparent calc(50% + 1px)),
+    radial-gradient(circle at 50% 110%, transparent 38%, #fff 38.2%, #fff 38.6%, transparent 38.8%);
+}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:clamp(24px,5vw,72px);align-items:end}
+.hero h1{
+  font-size:clamp(4.2rem, 13vw, 11.5rem);font-weight:900;line-height:.82;text-transform:uppercase;
+  letter-spacing:-.01em;margin-bottom:28px;
+}
+.hero h1 .row{display:block}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--on-dark)}
+.hero h1 .fill{color:var(--crab)}
+.hero .sub{font-size:clamp(1.15rem,2vw,1.35rem);max-width:34ch;color:#DCE7E0;margin-bottom:32px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:clamp(40px,6vw,72px)}
+.hero-video{
+  position:relative;align-self:stretch;max-height:640px;
+  clip-path:polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+  background:var(--mangrove);aspect-ratio:9/16;margin-left:auto;width:100%;max-width:340px;
+}
+.hero-video video{width:100%;height:100%;object-fit:cover}
+.hero-video .tag{
+  position:absolute;left:14px;bottom:14px;background:var(--crab);color:#fff;
+  font-family:var(--display);font-weight:800;font-size:1.05rem;padding:4px 10px;letter-spacing:.05em;
+}
+.facts{
+  position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.14);
+}
+.facts div{padding:22px 20px 26px;border-left:1px solid rgba(255,255,255,.14)}
+.facts div:first-child{border-left:0;padding-left:0}
+.facts b{display:block;font-family:var(--display);font-weight:800;font-size:1.9rem;line-height:1;color:#fff}
+.facts span{font-size:.98rem;color:var(--on-dark-muted)}
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-video{max-width:none;aspect-ratio:4/5;max-height:none;margin-bottom:0}
+  .hero .ctas{margin-bottom:32px}
+  .facts{grid-template-columns:1fr 1fr;margin-top:32px}
+  .facts div:nth-child(3){border-left:0;padding-left:0}
+  .facts div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section{scroll-margin-top:72px}
+.band{padding:clamp(72px,10vw,128px) 0}
+.light{background:var(--shell);color:var(--ink)}
+.sand{background:var(--sand)}
+.dark{background:var(--mangrove);color:var(--on-dark)}
+.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 64px;align-items:end;margin-bottom:48px}
+.section-head p{margin:0}
+@media (max-width:860px){.section-head{grid-template-columns:1fr}}
+
+/* ---------- Seasons ---------- */
+.season-tabs{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:0;border:2px solid var(--everglade);
+}
+.season-tab{
+  appearance:none;border:0;background:transparent;cursor:pointer;text-align:left;
+  padding:20px 24px;border-left:2px solid var(--everglade);position:relative;
+  transition:background .2s var(--ease), color .2s var(--ease);
+}
+.season-tab:first-child{border-left:0}
+.season-tab b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(2rem,4.5vw,3.25rem);line-height:.9;text-transform:uppercase}
+.season-tab span{display:block;font-weight:600;color:var(--muted);margin-top:6px;font-size:.98rem}
+.season-tab .status{display:inline-block;margin-top:10px;font-size:.85rem;font-weight:700;padding:3px 10px;background:var(--sand);color:var(--everglade)}
+.season-tab .status.open{background:var(--crab);color:#fff}
+.season-tab:hover{background:rgba(0,72,42,.05)}
+.season-tab[aria-selected="true"]{background:var(--everglade);color:#fff}
+.season-tab[aria-selected="true"] span{color:#CFE0D6}
+.season-tab[aria-selected="true"] .status:not(.open){background:rgba(255,255,255,.14);color:#fff}
+@media (max-width:700px){
+  .season-tabs{grid-template-columns:1fr}
+  .season-tab{border-left:0;border-top:2px solid var(--everglade);padding:16px 18px}
+  .season-tab:first-child{border-top:0}
+}
+.season-panel{border:2px solid var(--everglade);border-top:0;background:#fff}
+.season-intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px;padding:32px;border-bottom:1px solid var(--line)}
+.season-intro p{margin:0;color:var(--muted);max-width:58ch}
+.season-intro dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:.98rem}
+.season-intro dt{font-weight:700;color:var(--everglade)}
+.season-intro dd{margin:0}
+@media (max-width:760px){.season-intro{grid-template-columns:1fr;padding:22px}}
+
+.program{
+  display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,.9fr) auto;gap:16px 28px;align-items:center;
+  padding:24px 32px;border-bottom:1px solid var(--line);
+}
+.program:last-child{border-bottom:0}
+.program h3{font-size:1.6rem;margin-bottom:6px}
+.program p{margin:0;color:var(--muted);font-size:1rem;max-width:52ch}
+.program .meta{font-size:.98rem;line-height:1.5}
+.program .meta strong{display:block;color:var(--everglade)}
+.program .price{font-family:var(--display);font-weight:800;font-size:2.1rem;line-height:1}
+.program .price small{display:block;font-family:var(--body);font-weight:500;font-size:.85rem;color:var(--muted);margin-top:4px}
+@media (max-width:860px){
+  .program{grid-template-columns:1fr 1fr;padding:22px}
+  .program .info{grid-column:1/-1}
+  .program .btn{grid-column:1/-1}
+}
+
+/* ---------- Age groups ---------- */
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);border-top:4px solid var(--crab)}
+.tier{padding:28px 24px 32px;border-right:1px solid rgba(255,255,255,.12)}
+.tier:last-child{border-right:0}
+.tier .ages{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,4.6vw,3.6rem);line-height:.9;color:var(--crab);margin-bottom:6px}
+.tier h3{color:#fff;font-size:1.5rem;margin-bottom:14px}
+.tier p{color:var(--on-dark-muted);font-size:1rem;margin-bottom:14px}
+.tier ul{margin:0;padding:0;list-style:none;font-size:.98rem}
+.tier li{padding:6px 0;border-top:1px solid rgba(255,255,255,.1)}
+@media (max-width:960px){.tiers{grid-template-columns:1fr 1fr}.tier:nth-child(2){border-right:0}.tier:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}}
+@media (max-width:560px){.tiers{grid-template-columns:1fr}.tier{border-right:0;border-top:1px solid rgba(255,255,255,.12)}}
+
+.finder{
+  margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center;
+  background:var(--everglade);padding:32px;
+  clip-path:polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+}
+.finder h3{color:#fff;font-size:2rem;margin-bottom:8px}
+.finder p{color:var(--on-dark-muted);margin:0}
+.finder-row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+.finder label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px;color:#DCE7E0}
+.finder input{
+  min-height:52px;padding:0 14px;border:2px solid rgba(255,255,255,.25);background:rgba(0,0,0,.18);color:#fff;min-width:200px;
+  color-scheme:dark;
+}
+.finder-result{margin-top:16px;min-height:1.6em;font-weight:600;color:#fff}
+.finder-result b{font-family:var(--display);font-size:1.8rem;color:var(--crab);margin-right:8px;vertical-align:-2px}
+@media (max-width:860px){.finder{grid-template-columns:1fr;padding:24px}}
+
+/* ---------- How it works (a real sequence) ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:step;margin:0;padding:0;list-style:none}
+.steps li{padding:0 24px 0 0;position:relative}
+.steps li::before{
+  counter-increment:step;content:counter(step);
+  display:grid;place-items:center;width:48px;height:48px;margin-bottom:18px;
+  background:var(--crab);color:#fff;font-family:var(--display);font-weight:900;font-size:1.6rem;
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+.steps li::after{content:"";position:absolute;top:24px;left:60px;right:16px;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps h3{font-size:1.45rem;margin-bottom:8px}
+.steps p{color:var(--muted);font-size:1rem;margin:0}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr;gap:36px 0}.steps li::after{display:none}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* ---------- Forms ---------- */
+.form-shell{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,6vw,80px);align-items:start}
+@media (max-width:960px){.form-shell{grid-template-columns:1fr}}
+.form-aside h2{margin-bottom:20px}
+@media (min-width:961px){.form-aside{position:sticky;top:96px}}
+.summary{
+  margin-top:28px;background:var(--everglade);color:#fff;padding:24px;
+  clip-path:polygon(0 0, calc(100% - var(--notch)) 0, 100% var(--notch), 100% 100%, 0 100%);
+}
+.summary h3{font-size:1.4rem;margin-bottom:12px}
+.summary dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:.98rem}
+.summary dt{color:var(--on-dark-muted)}
+.summary dd{margin:0;font-weight:600;text-align:right}
+.summary .total{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.18);display:flex;justify-content:space-between;align-items:baseline}
+.summary .total b{font-family:var(--display);font-size:2.2rem;color:var(--crab)}
+
+form.card{background:#fff;color:var(--ink);border:2px solid var(--everglade);padding:clamp(20px,4vw,40px)}
+.success{color:var(--ink)}
+fieldset{border:0;margin:0 0 28px;padding:0}
+legend{font-family:var(--display);font-weight:800;font-size:1.6rem;text-transform:uppercase;color:var(--everglade);margin-bottom:14px;padding:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.span2{grid-column:1/-1}
+@media (max-width:620px){.grid2,.grid3{grid-template-columns:1fr}}
+.field label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+.field label .opt{font-weight:500;color:var(--muted)}
+.field input,.field select,.field textarea{
+  width:100%;min-height:50px;padding:10px 14px;border:2px solid #C9D3CC;background:#fff;border-radius:0;
+  transition:border-color .15s;
+}
+.field textarea{min-height:130px;resize:vertical}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%2300482A' stroke-width='2.5'%3E%3Cpath d='M1 1l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--everglade);box-shadow:0 0 0 3px rgba(240,86,30,.35)}
+.field .hint{font-size:.88rem;color:var(--muted);margin-top:4px}
+.field .err{display:none;font-size:.88rem;color:#B3260B;font-weight:600;margin-top:4px}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:#B3260B}
+.field.invalid .err{display:block}
+.choice{display:flex;gap:10px;flex-wrap:wrap}
+.choice label{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:2px solid #C9D3CC;cursor:pointer;font-weight:600;margin:0;
+}
+.choice input{accent-color:var(--crab);width:18px;height:18px;min-height:0}
+.choice label:has(input:checked){border-color:var(--everglade);background:rgba(0,72,42,.06)}
+.check,.field label.check{display:flex;gap:12px;align-items:flex-start;font-size:.98rem;font-weight:500}
+.check input{accent-color:var(--crab);width:20px;height:20px;margin-top:3px;flex:none}
+.age-pill{display:inline-block;margin-top:8px;font-weight:700;color:var(--everglade)}
+.age-pill:empty{display:none}
+.form-foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;margin-top:8px}
+.form-foot p{margin:0;font-size:.92rem;color:var(--muted);max-width:42ch}
+.form-error{display:none;background:#FDECE6;color:#8A1D07;border-left:4px solid #B3260B;padding:12px 16px;margin-bottom:20px;font-weight:600}
+.form-error.show{display:block}
+.success{
+  display:none;background:#fff;border:2px solid var(--everglade);padding:clamp(24px,4vw,44px);text-align:left;
+}
+.success.show{display:block;animation:pop .5s var(--ease)}
+.success img{width:84px;margin-bottom:12px}
+.success h3{font-size:2.2rem;color:var(--everglade);margin-bottom:10px}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Coaches ---------- */
+.coach-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,64px);align-items:start}
+@media (max-width:860px){.coach-grid{grid-template-columns:1fr}}
+.coach{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:24px 0;border-top:1px solid var(--line)}
+.coach:first-of-type{border-top:0;padding-top:0}
+.coach .avatar{
+  width:120px;height:120px;background:var(--everglade);display:grid;place-items:center;
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  font-family:var(--display);font-weight:900;font-size:2.6rem;color:var(--crab);
+}
+.coach h3{font-size:1.6rem}
+.coach .role{font-weight:700;color:var(--crab-deep);margin:4px 0 8px}
+.coach p{color:var(--muted);font-size:1rem;margin:0}
+.pillars{list-style:none;margin:0;padding:0}
+.pillars li{padding:20px 0;border-top:2px solid var(--everglade)}
+.pillars li:last-child{border-bottom:2px solid var(--everglade)}
+.pillars b{display:block;font-family:var(--display);font-weight:800;font-size:1.5rem;text-transform:uppercase;margin-bottom:4px}
+.pillars span{color:var(--muted)}
+
+/* ---------- Gear ---------- */
+.gear{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}
+@media (max-width:760px){.gear{grid-template-columns:1fr}}
+.gear h3{font-size:1.8rem;color:#fff;margin-bottom:14px;padding-bottom:12px;border-bottom:4px solid var(--crab)}
+.gear ul{list-style:none;margin:0;padding:0;columns:2;column-gap:24px}
+.gear li{break-inside:avoid;padding:8px 0 8px 28px;position:relative;color:#DCE7E0}
+.gear li::before{content:"";position:absolute;left:0;top:15px;width:14px;height:10px;border-left:3px solid var(--crab);border-bottom:3px solid var(--crab);transform:rotate(-45deg)}
+@media (max-width:420px){.gear ul{columns:1}}
+.gear-note{margin-top:32px;color:var(--on-dark-muted);font-size:1rem}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:880px}
+.faq details{border-top:2px solid var(--everglade)}
+.faq details:last-child{border-bottom:2px solid var(--everglade)}
+.faq summary{
+  list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;align-items:center;
+  padding:22px 0;font-family:var(--display);font-weight:800;font-size:clamp(1.35rem,2.4vw,1.7rem);text-transform:uppercase;line-height:1.05;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";flex:none;width:28px;height:28px;background:var(--crab);
+  -webkit-mask:linear-gradient(#000 0 0) center/16px 3px no-repeat, linear-gradient(#000 0 0) center/3px 16px no-repeat;
+          mask:linear-gradient(#000 0 0) center/16px 3px no-repeat, linear-gradient(#000 0 0) center/3px 16px no-repeat;
+  transition:transform .25s var(--ease);
+}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 0 24px;color:var(--muted);max-width:68ch}
+
+/* ---------- Contact ---------- */
+.contact-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,6vw,80px);align-items:start}
+@media (max-width:960px){.contact-grid{grid-template-columns:1fr}}
+.contact-list{list-style:none;margin:28px 0 0;padding:0}
+.contact-list li{padding:18px 0;border-top:1px solid rgba(255,255,255,.14)}
+.contact-list li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.contact-list span{display:block;color:var(--on-dark-muted);font-size:.95rem}
+.contact-list a{font-weight:700;font-size:1.15rem;text-decoration:none;color:#fff}
+.contact-list a:hover{color:var(--crab)}
+.socials{display:flex;gap:10px;margin-top:28px}
+.socials a{
+  width:48px;height:48px;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff;
+  transition:background .2s;
+}
+.socials a:hover{background:var(--crab)}
+.socials svg{width:22px;height:22px}
+.dark form.card{border-color:transparent}
+
+/* ---------- Footer ---------- */
+.site-footer{background:#00190E;color:var(--on-dark-muted);padding:56px 0 32px;font-size:.98rem}
+.foot-grid{display:grid;grid-template-columns:1.2fr 1fr 1.3fr;gap:40px;align-items:start}
+@media (max-width:860px){.foot-grid{grid-template-columns:1fr}}
+.site-footer .brand span{color:#fff}
+.foot-links{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.foot-links a{text-decoration:none}
+.foot-links a:hover{color:#fff}
+.join label{display:block;color:#fff;font-weight:700;margin-bottom:8px;font-family:var(--display);font-size:1.5rem;text-transform:uppercase}
+.join .row{display:flex;gap:8px}
+.join input{flex:1;min-width:0;min-height:52px;padding:0 14px;border:2px solid rgba(255,255,255,.2);background:transparent;color:#fff}
+.join input::placeholder{color:#7E978A}
+.join .msg{min-height:1.5em;margin-top:8px;color:#fff;font-weight:600}
+.legal{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:.9rem}
+
+/* ---------- Mobile sticky register ---------- */
+.mobile-cta{display:none}
+@media (max-width:700px){
+  .mobile-cta{
+    display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:40;
+    transform:translateY(140%);transition:transform .3s var(--ease);
+  }
+  .mobile-cta.show{transform:none}
+  .mobile-cta .btn{flex:1;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============================================================
+     INTRO: plays the shot video, washes to white, shows the logo,
+     then reveals the site. Keep assets/intro.mp4 next to this file.
+     ============================================================ -->
+<div id="intro" aria-hidden="true">
+  <video class="backdrop" muted playsinline preload="auto" tabindex="-1">
+    <source src="assets/intro.mp4" type="video/mp4">
+    <source src="https://cdn.openart.ai/openart-ai/production/2026-10/create-video/Ch6CJLeguTHDQJzxVO5s/cgt-20261011055254-t41gt_1791669361700_7f06b059.mp4" type="video/mp4">
+  </video>
+  <video class="main" muted playsinline autoplay preload="auto" tabindex="-1">
+    <source src="assets/intro.mp4" type="video/mp4">
+    <source src="https://cdn.openart.ai/openart-ai/production/2026-10/create-video/Ch6CJLeguTHDQJzxVO5s/cgt-20261011055254-t41gt_1791669361700_7f06b059.mp4" type="video/mp4">
+  </video>
+  <div class="white">
+    <img class="logo-mark" src="assets/logo.png" alt="">
+    <div class="tagline">EST. 2010</div>
+  </div>
+  <div class="intro-ui">
+    <button class="intro-btn" id="introSound" type="button">Sound on</button>
+    <button class="intro-btn" id="introSkip" type="button">Skip intro</button>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Stone Crabs Lacrosse Club home">
+      <img src="assets/logo.png" alt="" width="52" height="52">
+      <span>Stone Crabs<small>Miami lacrosse club</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#seasons">Seasons</a>
+      <a href="#teams">Age groups</a>
+      <a href="#coaches">Coaches</a>
+      <a href="#gear">Gear</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a class="btn small" href="#register">Register</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1 id="hero-title">
+          <span class="row">Stone</span>
+          <span class="row fill">Crabs</span>
+          <span class="row outline">Lacrosse</span>
+        </h1>
+        <p class="sub">Spring, summer and winter lacrosse for Miami boys and girls, U10 through U17. New players and travel-team players both welcome.</p>
+        <div class="ctas">
+          <a class="btn" href="#register">Register for winter</a>
+          <a class="btn ghost" href="#teams">Find your age group</a>
+        </div>
+      </div>
+      <div class="hero-video">
+        <video id="heroVideo" muted playsinline loop preload="none" aria-label="A lacrosse shot ripping into the net">
+          <source data-src="assets/intro.mp4" type="video/mp4">
+          <source data-src="https://cdn.openart.ai/openart-ai/production/2026-10/create-video/Ch6CJLeguTHDQJzxVO5s/cgt-20261011055254-t41gt_1791669361700_7f06b059.mp4" type="video/mp4">
+        </video>
+        <span class="tag">#STONECRABSLAX</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div><b>Since 2010</b><span>Playing in Miami</span></div>
+      <div><b>U10–U17</b><span>Boys and girls programs</span></div>
+      <div><b>3 seasons</b><span>Spring, summer and winter</span></div>
+      <div><b>Pinecrest</b><span>Run with Pinecrest Parks &amp; Rec</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SEASONS ================= -->
+<section id="seasons" class="band light" aria-labelledby="seasons-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="seasons-title">Pick your season</h2>
+      <p class="lede">Every season runs on its own schedule, so players can join for one or stay year-round. Choose a season to see its programs, dates and fees.</p>
+    </div>
+
+    <div class="season-tabs" role="tablist" aria-label="Seasons">
+      <!-- built by script -->
+    </div>
+    <div class="season-panel" id="seasonPanel" role="tabpanel" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ================= AGE GROUPS ================= -->
+<section id="teams" class="band dark" aria-labelledby="teams-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="teams-title">Age groups</h2>
+      <p class="lede">Players train with kids their own age and level. Each group has its own coaching focus, from first ground balls to college-style systems.</p>
+    </div>
+
+    <div class="tiers">
+      <article class="tier">
+        <div class="ages">U10–U11</div>
+        <h3>Youth</h3>
+        <p>First sticks and first goals. Fun, fast games that build skills without the pressure.</p>
+        <ul><li>Catching, throwing, cradling</li><li>Ground balls and footwork</li><li>Small-sided 4v4 and 7v7</li></ul>
+      </article>
+      <article class="tier">
+        <div class="ages">U12–U13</div>
+        <h3>Junior</h3>
+        <p>Two-handed players who understand the field. The jump from rec to club lacrosse.</p>
+        <ul><li>Off-hand development</li><li>Dodging and shooting on the run</li><li>Intro to team offense and defense</li></ul>
+      </article>
+      <article class="tier">
+        <div class="ages">U14–U15</div>
+        <h3>Select</h3>
+        <p>Full-field lacrosse and tournament play, built to get players ready for high school varsity.</p>
+        <ul><li>Position-specific training</li><li>Clearing, rides and transition</li><li>Regional tournaments</li></ul>
+      </article>
+      <article class="tier">
+        <div class="ages">U16–U17</div>
+        <h3>Elite</h3>
+        <p>High-level competition with college exposure for players who want to play at the next level.</p>
+        <ul><li>Advanced sets and film review</li><li>Showcase tournaments</li><li>Recruiting guidance</li></ul>
+      </article>
+    </div>
+
+    <div class="finder">
+      <div>
+        <h3>Not sure which group?</h3>
+        <p>Enter your player's birthday. Age groups for the 2026–27 seasons are set by age on August 31, 2026.</p>
+      </div>
+      <div>
+        <div class="finder-row">
+          <div>
+            <label for="finderDob">Player's date of birth</label>
+            <input type="date" id="finderDob" min="2005-01-01" max="2022-12-31">
+          </div>
+          <a class="btn" href="#register" id="finderGo">Register</a>
+        </div>
+        <div class="finder-result" id="finderResult" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="band sand" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="how-title">How sign-up works</h2>
+      <p class="lede">Registration takes about five minutes. You'll get a confirmation email with your schedule and next steps.</p>
+    </div>
+    <ol class="steps">
+      <li><h3>Choose a season</h3><p>Spring, summer or winter. Each one has its own dates and programs.</p></li>
+      <li><h3>Pick a program</h3><p>League, academy, camp or travel team. Your player's age group is matched from their birthday.</p></li>
+      <li><h3>Fill out the form</h3><p>Player info, a parent contact, jersey size and any medical notes for coaches.</p></li>
+      <li><h3>Get on the field</h3><p>We confirm your spot by email with payment details, field location and what to bring.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= REGISTER ================= -->
+<section id="register" class="band light" aria-labelledby="register-title">
+  <div class="wrap form-shell">
+    <div class="form-aside">
+      <h2 id="register-title">Register a player</h2>
+      <p class="lede">Signing up more than one player? Submit one form per player and we'll take 10% off for each sibling.</p>
+
+      <div class="summary" aria-live="polite">
+        <h3>Your registration</h3>
+        <dl>
+          <dt>Season</dt><dd id="sumSeason">Choose a season</dd>
+          <dt>Program</dt><dd id="sumProgram">Choose a program</dd>
+          <dt>Age group</dt><dd id="sumAge">Add date of birth</dd>
+          <dt>Sibling discount</dt><dd id="sumSib">None</dd>
+        </dl>
+        <div class="total"><span>Program fee</span><b id="sumTotal">$0</b></div>
+      </div>
+    </div>
+
+    <div>
+      <form class="card" id="regForm" novalidate data-kind="Registration">
+        <div class="form-error" role="alert"></div>
+
+        <fieldset>
+          <legend>Program</legend>
+          <div class="grid2">
+            <div class="field">
+              <label for="rSeason">Season</label>
+              <select id="rSeason" name="season" required>
+                <option value="">Choose a season</option>
+              </select>
+              <div class="err">Choose a season.</div>
+            </div>
+            <div class="field">
+              <label for="rProgram">Program</label>
+              <select id="rProgram" name="program" required disabled>
+                <option value="">Choose a season first</option>
+              </select>
+              <div class="err">Choose a program.</div>
+            </div>
+            <div class="field span2">
+              <label id="rGenderLabel">Program type</label>
+              <div class="choice" role="radiogroup" aria-labelledby="rGenderLabel">
+                <label><input type="radio" name="division" value="Boys" checked> Boys</label>
+                <label><input type="radio" name="division" value="Girls"> Girls</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Player</legend>
+          <div class="grid2">
+            <div class="field">
+              <label for="rFirst">First name</label>
+              <input id="rFirst" name="player_first_name" autocomplete="off" required>
+              <div class="err">Enter the player's first name.</div>
+            </div>
+            <div class="field">
+              <label for="rLast">Last name</label>
+              <input id="rLast" name="player_last_name" autocomplete="off" required>
+              <div class="err">Enter the player's last name.</div>
+            </div>
+            <div class="field">
+              <label for="rDob">Date of birth</label>
+              <input id="rDob" name="date_of_birth" type="date" min="2005-01-01" max="2022-12-31" required>
+              <div class="age-pill" id="rAgeGroup" aria-live="polite"></div>
+              <div class="err">Enter a date of birth for a U10–U17 player.</div>
+            </div>
+            <div class="field">
+              <label for="rSchool">School <span class="opt">(optional)</span></label>
+              <input id="rSchool" name="school">
+            </div>
+            <div class="field">
+              <label for="rExp">Experience</label>
+              <select id="rExp" name="experience" required>
+                <option value="">Select</option>
+                <option>Brand new to lacrosse</option>
+                <option>1–2 seasons</option>
+                <option>3+ seasons</option>
+                <option>Club or travel team player</option>
+              </select>
+              <div class="err">Choose an experience level.</div>
+            </div>
+            <div class="field">
+              <label for="rPos">Position <span class="opt">(optional)</span></label>
+              <select id="rPos" name="position">
+                <option value="">Not sure yet</option>
+                <option>Attack</option><option>Midfield</option><option>Defense</option>
+                <option>Goalie</option><option>Face-off (FOGO)</option><option>Draw specialist</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="rSize">Jersey and shorts size</label>
+              <select id="rSize" name="jersey_size" required>
+                <option value="">Select</option>
+                <option>Youth S</option><option>Youth M</option><option>Youth L</option><option>Youth XL</option>
+                <option>Adult S</option><option>Adult M</option><option>Adult L</option><option>Adult XL</option>
+              </select>
+              <div class="err">Choose a size.</div>
+            </div>
+            <div class="field">
+              <label for="rGear">Needs a loaner stick?</label>
+              <select id="rGear" name="loaner_gear">
+                <option>No, we have gear</option>
+                <option>Yes, loaner stick</option>
+                <option>Yes, stick and pads</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Parent or guardian</legend>
+          <div class="grid2">
+            <div class="field">
+              <label for="rPName">Full name</label>
+              <input id="rPName" name="parent_name" autocomplete="name" required>
+              <div class="err">Enter a parent or guardian name.</div>
+            </div>
+            <div class="field">
+              <label for="rPPhone">Mobile phone</label>
+              <input id="rPPhone" name="parent_phone" type="tel" autocomplete="tel" inputmode="tel" required>
+              <div class="err">Enter a phone number we can text on game days.</div>
+            </div>
+            <div class="field span2">
+              <label for="rPEmail">Email</label>
+              <input id="rPEmail" name="email" type="email" autocomplete="email" required>
+              <div class="hint">Your confirmation and schedule go here.</div>
+              <div class="err">Enter a valid email address.</div>
+            </div>
+            <div class="field span2">
+              <label for="rMed">Allergies or medical notes <span class="opt">(optional)</span></label>
+              <textarea id="rMed" name="medical_notes" rows="3" placeholder="Anything coaches should know, like asthma or allergies"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <label class="check" style="margin-bottom:14px"><input type="checkbox" id="rSibling" name="sibling"> This player has a sibling registering this season</label>
+          <div class="field">
+            <label class="check"><input type="checkbox" id="rWaiver" name="waiver" required> I'm this player's parent or guardian and agree to the club's participation waiver, code of conduct and refund policy.</label>
+            <div class="err">Agree to the waiver to finish registration.</div>
+          </div>
+        </fieldset>
+
+        <div class="form-foot">
+          <p>No payment is taken here. We'll email payment details once your spot is confirmed.</p>
+          <button class="btn" type="submit">Register player</button>
+        </div>
+      </form>
+
+      <div class="success" id="regSuccess" tabindex="-1">
+        <img src="assets/logo.png" alt="">
+        <h3>Player registered</h3>
+        <p id="regSuccessText">Welcome to the Stone Crabs. Watch your inbox for a confirmation with your schedule and payment details.</p>
+        <button class="btn small ghost" type="button" id="regAgain" style="color:var(--everglade)">Register another player</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COACHES ================= -->
+<section id="coaches" class="band sand" aria-labelledby="coaches-title">
+  <div class="wrap coach-grid">
+    <div>
+      <h2 id="coaches-title" style="margin-bottom:20px">Coached by players</h2>
+      <p class="lede" style="margin-bottom:36px">Our staff played the game at the high school, college and club level. Every coach is background-checked and certified through USA Lacrosse.</p>
+
+      <div class="coach">
+        <div class="avatar" aria-hidden="true">CK</div>
+        <div>
+          <h3>Connor Kelly</h3>
+          <div class="role">Programming and instruction</div>
+          <p>Runs club programming, practice plans and player development across every age group. Reach him directly at 203-993-4554.</p>
+        </div>
+      </div>
+      <div class="coach">
+        <div class="avatar" aria-hidden="true">G</div>
+        <div>
+          <h3>Girls program staff</h3>
+          <div class="role">Girls academy and teams</div>
+          <p>Draw control, stick skills and girls' rules game play, taught by former high school and college players.</p>
+        </div>
+      </div>
+    </div>
+
+    <ul class="pillars" aria-label="What every session includes">
+      <li><b>Reps over lines</b><span>Small groups and constant touches. Nobody stands around waiting for a turn.</span></li>
+      <li><b>Both hands</b><span>Every drill runs strong hand and off hand. Two-handed players see the whole field.</span></li>
+      <li><b>Lacrosse IQ</b><span>Players learn why a play works, not just where to run.</span></li>
+      <li><b>Compete every day</b><span>Each session ends in live play, because games are where skills stick.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= GEAR ================= -->
+<section id="gear" class="band dark" aria-labelledby="gear-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="gear-title">What to bring</h2>
+      <p class="lede">New to the sport? Loaner sticks are available for first-season players. Mark it on the registration form.</p>
+    </div>
+    <div class="gear">
+      <div>
+        <h3>Boys</h3>
+        <ul>
+          <li>NOCSAE-certified helmet</li><li>Gloves</li><li>Shoulder pads</li><li>Arm pads</li>
+          <li>Mouthguard</li><li>Athletic cup</li><li>Stick (40–42")</li><li>Cleats</li>
+          <li>Water bottle</li><li>Goalies: chest and throat guard</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Girls</h3>
+        <ul>
+          <li>Certified eye goggles</li><li>Mouthguard</li><li>Girls' stick</li><li>Cleats</li>
+          <li>Water bottle</li><li>Optional: soft headgear</li><li>Goalies: full goalie kit</li>
+        </ul>
+      </div>
+    </div>
+    <p class="gear-note">Gear available locally at Dick's Sporting Goods, or online at sportstop.com and Lacrosse Unlimited.</p>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" class="band light" aria-labelledby="faq-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="faq-title">Questions</h2>
+      <p class="lede">Can't find your answer? Send us a message below and a coach will get back to you within a day.</p>
+    </div>
+    <div class="faq">
+      <details><summary>Does my child need lacrosse experience?</summary><div class="a">No. Every program groups players by age and level, and our Youth and Junior groups are built for first-time players. Loaner sticks are available.</div></details>
+      <details><summary>How are age groups decided?</summary><div class="a">By the player's age on August 31, 2026 for all 2026–27 seasons. A player who is 11 on that date plays U12. Use the age finder above to check.</div></details>
+      <details><summary>Do you have girls programs?</summary><div class="a">Yes. Girls academy and girls teams run in every season, coached under girls' rules with girls' equipment.</div></details>
+      <details><summary>What happens when it rains or there's lightning?</summary><div class="a">Practices move or pause for lightning. We clear the field at the first strike and wait 30 minutes after the last one. Cancellations go out by text and email at least an hour before start time.</div></details>
+      <details><summary>What is the refund policy?</summary><div class="a">Full refund up to 7 days before the season starts. After that we credit missed sessions toward a future season. Registration and cancellation for Pinecrest programs are handled by Pinecrest Parks &amp; Recreation at 305-284-0900.</div></details>
+      <details><summary>Do you offer sibling or financial assistance?</summary><div class="a">Siblings get 10% off each additional player. If cost is a barrier, email us. We don't want any kid to miss out.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="band dark" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 id="contact-title" style="margin-bottom:20px">Contact us</h2>
+      <p class="lede">Questions about programs, teams or tryouts? Send a message and we'll reply within one business day.</p>
+      <ul class="contact-list">
+        <li><span>Email</span><a href="mailto:info@miamistonecrabs.com">info@miamistonecrabs.com</a></li>
+        <li><span>Programs and instruction (Connor Kelly)</span><a href="tel:+12039934554">203-993-4554</a></li>
+        <li><span>Registration and cancellations (Pinecrest Parks &amp; Rec)</span><a href="tel:+13052840900">305-284-0900</a></li>
+      </ul>
+      <div class="socials">
+        <a href="https://www.instagram.com/stonecrabslax" target="_blank" rel="noopener" aria-label="Instagram @stonecrabslax">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.facebook.com/stonecrabslax" target="_blank" rel="noopener" aria-label="Facebook stonecrabslax">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.5-1 1-1h2.5V2H14c-3.4 0-4.2 2.5-4.2 4.2v2.3H7.5V12h2.3v10H14V12h3l.5-3.5H14z"/></svg>
+        </a>
+        <a href="https://x.com/StoneCrabsLax" target="_blank" rel="noopener" aria-label="X @StoneCrabsLax">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7 8 10.3h-6.3l-4.9-6.4L5.3 21H2.2l7.3-8.3L1.9 3h6.4l4.4 5.9L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <form class="card" id="contactForm" novalidate data-kind="Contact">
+        <div class="form-error" role="alert"></div>
+        <div class="grid2">
+          <div class="field">
+            <label for="cName">Your name</label>
+            <input id="cName" name="name" autocomplete="name" required>
+            <div class="err">Enter your name.</div>
+          </div>
+          <div class="field">
+            <label for="cEmail">Email</label>
+            <input id="cEmail" name="email" type="email" autocomplete="email" required>
+            <div class="err">Enter a valid email address.</div>
+          </div>
+          <div class="field">
+            <label for="cPhone">Phone <span class="opt">(optional)</span></label>
+            <input id="cPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+          </div>
+          <div class="field">
+            <label for="cTopic">Topic</label>
+            <select id="cTopic" name="topic" required>
+              <option value="">Select a topic</option>
+              <option>Registration</option>
+              <option>Programs and schedules</option>
+              <option>Teams and tryouts</option>
+              <option>Girls programs</option>
+              <option>Coaching or volunteering</option>
+              <option>Sponsorship</option>
+              <option>Something else</option>
+            </select>
+            <div class="err">Choose a topic.</div>
+          </div>
+          <div class="field span2">
+            <label for="cMsg">Message</label>
+            <textarea id="cMsg" name="message" required placeholder="Include your player's age group if it's about a program"></textarea>
+            <div class="err">Write a message.</div>
+          </div>
+        </div>
+        <!-- spam trap: real people never fill this in -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div class="form-foot">
+          <p>We reply within one business day.</p>
+          <button class="btn" type="submit">Send message</button>
+        </div>
+      </form>
+      <div class="success" id="contactSuccess" tabindex="-1">
+        <img src="assets/logo.png" alt="">
+        <h3>Message sent</h3>
+        <p>Thanks for reaching out. A coach will reply to your email within one business day.</p>
+        <button class="btn small ghost" type="button" id="contactAgain" style="color:var(--everglade)">Send another message</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top"><img src="assets/logo.png" alt="" width="52" height="52"><span>Stone Crabs<small>Miami lacrosse club</small></span></a>
+        <p style="margin-top:16px;max-width:36ch">Youth lacrosse in Miami since 2010. Spring, summer and winter programs for players U10–U17.</p>
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#seasons">Seasons</a><a href="#register">Register</a>
+        <a href="#teams">Age groups</a><a href="#coaches">Coaches</a>
+        <a href="#gear">Gear list</a><a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a><a href="mailto:info@miamistonecrabs.com">Email us</a>
+      </nav>
+      <form class="join" id="joinForm" novalidate data-kind="Mailing list">
+        <label for="jEmail">Join the mailing list</label>
+        <div class="row">
+          <input id="jEmail" name="email" type="email" placeholder="Parent email" autocomplete="email" required>
+          <button class="btn small" type="submit">Join</button>
+        </div>
+        <div class="msg" aria-live="polite"></div>
+      </form>
+    </div>
+    <div class="legal">
+      <span>© 2010–<span id="year">2026</span> Stone Crabs Lacrosse Club. All rights reserved.</span>
+      <span>Miami, Florida</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta" id="mobileCta"><a class="btn" href="#register">Register a player</a></div>
+
+<script>
+/* ============================================================
+   SETTINGS: edit these
+   ------------------------------------------------------------
+   formEndpoint: GitHub Pages can't send email by itself. Create a free
+   form at https://formspree.io (or Basin, Getform, etc.), then paste
+   its endpoint URL here, e.g. "https://formspree.io/f/abcdwxyz".
+   No-signup option: "https://formsubmit.co/ajax/info@miamistonecrabs.com"
+   (the first message triggers a one-time activation email to that inbox).
+   Leave it blank and forms open the visitor's email app with
+   everything filled in, addressed to clubEmail.
+   ============================================================ */
+const CONFIG = {
+  formEndpoint: "",
+  clubEmail: "info@miamistonecrabs.com",
+  ageCutoff: "2026-08-31",      // age on this date sets the age group
+  siblingDiscount: 0.10
+};
+
+/* Seasons and programs. Change dates, times and fees here; the
+   season tabs, registration form and price summary all update. */
+const SEASONS = {
+  winter: {
+    name: "Winter", months: "Oct – Dec 2026", status: "Registration open", open: true,
+    blurb: "Short days, sharp skills. Winter is for small-group training and game play that keeps players sharp between seasons.",
+    facts: [["Dates","Oct 27 – Dec 10, 2026"],["Where","Pinecrest, FL"],["Ages","U10–U17, boys and girls"],["Sign up by","Oct 24, 2026"]],
+    programs: [
+      { id:"w-game", name:"Game Play Tuesdays", desc:"Coached small-sided games built around decision-making and live reps.", when:"Tuesdays, 5:30–7:00 pm", dates:"Oct 27 – Dec 8", ages:"U10–U17", price:225, unit:"7 sessions" },
+      { id:"w-acad", name:"Thursday Academy", desc:"Skill-focused training by age group: stick work, shooting, dodging and defense.", when:"Thursdays, 5:30–7:00 pm", dates:"Oct 29 – Dec 10", ages:"U10–U17", price:225, unit:"7 sessions" },
+      { id:"w-both", name:"Winter Full Pass", desc:"Both Game Play and Academy every week. The best value for committed players.", when:"Tue + Thu", dates:"Oct 27 – Dec 10", ages:"U10–U17", price:395, unit:"14 sessions" },
+      { id:"w-goalie", name:"Goalie Clinic", desc:"Stance, footwork, saves and outlet passes with a dedicated goalie coach.", when:"Saturdays, 9:00–10:30 am", dates:"Nov 7 – Dec 5", ages:"U12–U17", price:165, unit:"5 sessions" }
+    ]
+  },
+  spring: {
+    name: "Spring", months: "Feb – May 2027", status: "Opens Dec 1", open: false,
+    blurb: "The main event. Spring is full club season with weekly practices, league games and weekend tournaments across South Florida.",
+    facts: [["Dates","Feb 1 – May 16, 2027"],["Where","Pinecrest, FL + tournaments"],["Ages","U10–U17, boys and girls"],["Sign up by","Jan 15, 2027"]],
+    programs: [
+      { id:"s-club", name:"Spring Club Team", desc:"Two practices a week plus league games. Teams formed by age group and level.", when:"Mon + Wed, 5:30–7:00 pm", dates:"Feb 1 – May 16", ages:"U10–U17", price:495, unit:"full season" },
+      { id:"s-travel", name:"Spring Travel Team", desc:"Club practices plus four weekend tournaments in Florida. Evaluation required.", when:"Mon + Wed + 4 weekends", dates:"Feb 1 – May 16", ages:"U12–U17", price:795, unit:"full season" },
+      { id:"s-7v7", name:"Spring 7v7 League", desc:"Fast, smaller-field games on weekends. Great for new players and multi-sport kids.", when:"Sundays, 2:00–4:00 pm", dates:"Feb 21 – Apr 25", ages:"U10–U14", price:250, unit:"10 weeks" }
+    ]
+  },
+  summer: {
+    name: "Summer", months: "Jun – Aug 2027", status: "Opens Mar 1", open: false,
+    blurb: "Camp weeks, showcase tournaments and speed training. Summer is where players make their biggest jumps.",
+    facts: [["Dates","Jun 14 – Aug 6, 2027"],["Where","Pinecrest, FL + travel"],["Ages","U10–U17, boys and girls"],["Sign up by","May 31, 2027"]],
+    programs: [
+      { id:"u-camp", name:"Stone Crabs Summer Camp", desc:"Half-day camp weeks with skills stations, position work and daily games. Choose any week.", when:"Mon–Fri, 9:00 am–1:00 pm", dates:"Weekly, Jun 14 – Jul 30", ages:"U10–U15", price:295, unit:"per week" },
+      { id:"u-travel", name:"Summer Travel Team", desc:"Three showcase tournaments in front of college coaches, plus team practices.", when:"Tue + Thu evenings + 3 events", dates:"Jun 15 – Aug 6", ages:"U14–U17", price:895, unit:"full summer" },
+      { id:"u-speed", name:"Speed and Shooting Clinic", desc:"Evening sessions on first-step speed, shot power and finishing around the crease.", when:"Wednesdays, 6:00–7:30 pm", dates:"Jun 16 – Jul 28", ages:"U12–U17", price:210, unit:"7 sessions" }
+    ]
+  }
+};
+const SEASON_ORDER = ["spring","summer","winter"];
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+(function intro(){
+  const el = document.getElementById("intro");
+  const main = el.querySelector("video.main");
+  const back = el.querySelector("video.backdrop");
+  const html = document.documentElement;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let stage = 0; // 0 playing, 1 white/logo, 2 done
+
+  html.classList.add("lock");
+
+  function toLogo(){
+    if (stage) return; stage = 1;
+    el.classList.add("to-white");
+    setTimeout(()=> el.classList.add("logo-in"), reduced ? 0 : 350);
+    setTimeout(finish, reduced ? 900 : 2400);
+  }
+  function finish(){
+    if (stage === 2) return; stage = 2;
+    el.classList.add("out");
+    html.classList.remove("lock");
+    try { main.pause(); back.pause(); } catch(e){}
+    setTimeout(()=> el.remove(), 1000);
+    startHeroVideo();
+    document.dispatchEvent(new Event("intro:done"));
+  }
+
+  if (reduced) { toLogo(); return; }
+
+  // The clip itself fades to white around 7s; hand off to the logo there.
+  main.addEventListener("timeupdate", ()=>{
+    if (back.paused === false && Math.abs(back.currentTime - main.currentTime) > .3) back.currentTime = main.currentTime;
+    if (main.duration && main.currentTime >= Math.min(7.1, main.duration - .4)) toLogo();
+  });
+  main.addEventListener("ended", toLogo);
+  // If every video source fails, skip straight to the logo.
+  const sources = main.querySelectorAll("source");
+  sources[sources.length - 1].addEventListener("error", toLogo);
+
+  const p = main.play();
+  if (p && p.catch) p.then(()=> back.play().catch(()=>{})).catch(toLogo);
+  // Safety nets: slow connection or autoplay blocked.
+  setTimeout(()=>{ if (!stage && main.currentTime < .1) toLogo(); }, 4500);
+  setTimeout(()=>{ if (!stage) toLogo(); }, 11000);
+
+  document.getElementById("introSkip").addEventListener("click", ()=>{ if(!stage) toLogo(); else finish(); });
+  const sound = document.getElementById("introSound");
+  sound.addEventListener("click", ()=>{
+    main.muted = !main.muted;
+    sound.textContent = main.muted ? "Sound on" : "Sound off";
+  });
+  document.addEventListener("keydown", e=>{ if (e.key === "Escape" && stage < 2) finish(); });
+})();
+
+function startHeroVideo(){
+  const v = document.getElementById("heroVideo");
+  if (!v || v.dataset.ready) return;
+  v.dataset.ready = "1";
+  v.querySelectorAll("source").forEach(s => s.src = s.dataset.src);
+  v.load();
+  // Loop only the action, before the clip washes out to white.
+  v.addEventListener("timeupdate", ()=>{ if (v.currentTime > 6.6) v.currentTime = 0; });
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) v.play().catch(()=>{});
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const nav = document.getElementById("nav");
+const toggle = document.getElementById("menuToggle");
+toggle.addEventListener("click", ()=>{
+  const open = nav.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", open);
+  toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+});
+nav.addEventListener("click", e=>{ if (e.target.closest("a")) { nav.classList.remove("open"); toggle.setAttribute("aria-expanded","false"); }});
+
+const mobileCta = document.getElementById("mobileCta");
+const regSection = document.getElementById("register");
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(en => { if (en.target === regSection) mobileCta.dataset.inReg = en.isIntersecting ? "1" : ""; });
+  mobileCta.classList.toggle("show", scrollY > 500 && !mobileCta.dataset.inReg);
+});
+io.observe(regSection);
+addEventListener("scroll", ()=> mobileCta.classList.toggle("show", scrollY > 500 && !mobileCta.dataset.inReg), {passive:true});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ============================================================
+   SEASONS
+   ============================================================ */
+const money = n => "$" + n.toLocaleString("en-US", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2});
+const tabsEl = document.querySelector(".season-tabs");
+const panel = document.getElementById("seasonPanel");
+
+SEASON_ORDER.forEach(key=>{
+  const s = SEASONS[key];
+  const b = document.createElement("button");
+  b.className = "season-tab"; b.type = "button"; b.setAttribute("role","tab"); b.id = "tab-" + key;
+  b.setAttribute("aria-controls", "seasonPanel");
+  b.dataset.season = key;
+  b.innerHTML = `<b>${s.name}</b><span>${s.months}</span><em class="status ${s.open ? "open" : ""}" style="font-style:normal">${s.status}</em>`;
+  b.addEventListener("click", ()=> showSeason(key, true));
+  tabsEl.appendChild(b);
+});
+tabsEl.addEventListener("keydown", e=>{
+  if (!["ArrowLeft","ArrowRight"].includes(e.key)) return;
+  const tabs = [...tabsEl.children]; const i = tabs.indexOf(document.activeElement);
+  if (i < 0) return;
+  const next = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+  next.focus(); next.click();
+});
+
+function showSeason(key, focus){
+  const s = SEASONS[key];
+  [...tabsEl.children].forEach(t=>{
+    const on = t.dataset.season === key;
+    t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1;
+  });
+  panel.setAttribute("aria-labelledby", "tab-" + key);
+  panel.innerHTML = `
+    <div class="season-intro">
+      <p>${s.blurb}</p>
+      <dl>${s.facts.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+    </div>
+    ${s.programs.map(p=>`
+      <div class="program">
+        <div class="info"><h3>${p.name}</h3><p>${p.desc}</p></div>
+        <div class="meta"><strong>${p.when}</strong>${p.dates}<br>Ages ${p.ages}</div>
+        <div class="price">${money(p.price)}<small>${p.unit}</small></div>
+        <a class="btn small" href="#register" data-pick="${key}|${p.id}">${s.open ? "Register" : "Reserve a spot"}</a>
+      </div>`).join("")}`;
+}
+panel.addEventListener("click", e=>{
+  const a = e.target.closest("[data-pick]"); if (!a) return;
+  const [season, prog] = a.dataset.pick.split("|");
+  selectProgram(season, prog);
+});
+showSeason("winter");
+
+/* ============================================================
+   AGE GROUPS
+   ============================================================ */
+function ageGroup(dobStr){
+  if (!dobStr) return null;
+  const dob = new Date(dobStr + "T12:00:00"), cut = new Date(CONFIG.ageCutoff + "T12:00:00");
+  if (isNaN(dob)) return null;
+  let age = cut.getFullYear() - dob.getFullYear();
+  const m = cut.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && cut.getDate() < dob.getDate())) age--;
+  if (age < 7)  return { ok:false, age, text:`Age ${age} on Aug 31. U10 starts at age 7. Contact us about our Little Laxers program.` };
+  if (age > 16) return { ok:false, age, text:`Age ${age} on Aug 31, which is past U17. Contact us about high school options.` };
+  const u = Math.max(10, age + 1);
+  const tier = u <= 11 ? "Youth" : u <= 13 ? "Junior" : u <= 15 ? "Select" : "Elite";
+  return { ok:true, age, u, tier, label:`U${u}`, text:`${tier} group, age ${age} on Aug 31, 2026` };
+}
+const finderDob = document.getElementById("finderDob");
+const finderResult = document.getElementById("finderResult");
+finderDob.addEventListener("input", ()=>{
+  const g = ageGroup(finderDob.value);
+  finderResult.innerHTML = !g ? "" : g.ok ? `<b>${g.label}</b>${g.text}` : g.text;
+});
+document.getElementById("finderGo").addEventListener("click", ()=>{
+  if (finderDob.value) { rDob.value = finderDob.value; rDob.dispatchEvent(new Event("input")); }
+});
+
+/* ============================================================
+   REGISTRATION
+   ============================================================ */
+const regForm = document.getElementById("regForm");
+const rSeason = document.getElementById("rSeason");
+const rProgram = document.getElementById("rProgram");
+const rDob = document.getElementById("rDob");
+const rSibling = document.getElementById("rSibling");
+
+SEASON_ORDER.forEach(k=>{
+  const o = document.createElement("option");
+  o.value = k; o.textContent = `${SEASONS[k].name} (${SEASONS[k].months})`;
+  rSeason.appendChild(o);
+});
+function fillPrograms(){
+  const s = SEASONS[rSeason.value];
+  rProgram.innerHTML = s ? `<option value="">Choose a program</option>` + s.programs.map(p=>`<option value="${p.id}">${p.name} · ${money(p.price)}</option>`).join("")
+                         : `<option value="">Choose a season first</option>`;
+  rProgram.disabled = !s;
+}
+function currentProgram(){
+  const s = SEASONS[rSeason.value]; if (!s) return null;
+  return s.programs.find(p => p.id === rProgram.value) || null;
+}
+function updateSummary(){
+  const s = SEASONS[rSeason.value], p = currentProgram(), g = ageGroup(rDob.value);
+  document.getElementById("sumSeason").textContent = s ? s.name : "Choose a season";
+  document.getElementById("sumProgram").textContent = p ? p.name : "Choose a program";
+  document.getElementById("sumAge").textContent = g ? (g.ok ? `${g.label} ${g.tier}` : "Outside U10–U17") : "Add date of birth";
+  document.getElementById("rAgeGroup").textContent = g ? (g.ok ? `Age group: ${g.label} (${g.tier})` : g.text) : "";
+  const base = p ? p.price : 0;
+  const disc = rSibling.checked ? Math.round(base * CONFIG.siblingDiscount * 100) / 100 : 0;
+  document.getElementById("sumSib").textContent = disc ? "−" + money(disc) : "None";
+  document.getElementById("sumTotal").textContent = money(base - disc);
+}
+function selectProgram(season, prog){
+  rSeason.value = season; fillPrograms(); rProgram.value = prog; updateSummary();
+  [rSeason, rProgram].forEach(clearInvalid);
+}
+rSeason.addEventListener("change", ()=>{ fillPrograms(); updateSummary(); });
+[rProgram, rSibling].forEach(el => el.addEventListener("change", updateSummary));
+rDob.addEventListener("input", updateSummary);
+
+/* ============================================================
+   FORM HANDLING (shared by registration, contact, mailing list)
+   ============================================================ */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+function clearInvalid(el){ const f = el.closest(".field"); if (f) f.classList.remove("invalid"); }
+function validate(form){
+  let first = null;
+  form.querySelectorAll("[required]").forEach(el=>{
+    let ok = el.type === "checkbox" ? el.checked : el.value.trim() !== "";
+    if (ok && el.type === "email") ok = EMAIL_RE.test(el.value.trim());
+    if (ok && el.id === "rDob") { const g = ageGroup(el.value); ok = !!(g && g.ok); }
+    if (ok && el.type === "tel") ok = el.value.replace(/\D/g,"").length >= 10;
+    const f = el.closest(".field"); if (f) f.classList.toggle("invalid", !ok);
+    if (!ok && !first) first = el;
+  });
+  if (first) first.focus();
+  return !first;
+}
+document.querySelectorAll("form").forEach(form=>{
+  form.addEventListener("input", e=> clearInvalid(e.target));
+  form.addEventListener("change", e=> clearInvalid(e.target));
+});
+
+function collect(form){
+  const data = {};
+  new FormData(form).forEach((v,k)=>{ if (k !== "_gotcha") data[k] = typeof v === "string" ? v.trim() : v; });
+  if (form.id === "regForm") {
+    const s = SEASONS[data.season], p = currentProgram(), g = ageGroup(data.date_of_birth);
+    data.season = s ? s.name : data.season;
+    data.program = p ? p.name : data.program;
+    data.age_group = g && g.ok ? `${g.label} ${g.tier}` : "";
+    data.program_fee = document.getElementById("sumTotal").textContent;
+    data.sibling = rSibling.checked ? "Yes" : "No";
+    data.waiver = "Agreed";
+  }
+  data._subject = `${form.dataset.kind}: ` + (data.player_first_name ? `${data.player_first_name} ${data.player_last_name}` : (data.name || data.email || ""));
+  return data;
+}
+
+async function send(form){
+  const data = collect(form);
+  if (form.querySelector('[name="_gotcha"]')?.value) return true; // bot
+  if (CONFIG.formEndpoint) {
+    const res = await fetch(CONFIG.formEndpoint, {
+      method:"POST", headers:{ "Content-Type":"application/json", "Accept":"application/json" }, body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error("The form service returned an error.");
+    return true;
+  }
+  // No form service yet: open the visitor's email app, pre-filled.
+  const lines = Object.entries(data).filter(([k])=>k !== "_subject")
+    .map(([k,v])=> `${k.replace(/_/g," ").replace(/^\w/, c=>c.toUpperCase())}: ${v}`);
+  location.href = `mailto:${CONFIG.clubEmail}?subject=${encodeURIComponent(data._subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+  return true;
+}
+
+function wire(formId, successId, againId, onDone){
+  const form = document.getElementById(formId);
+  const success = successId && document.getElementById(successId);
+  const errBox = form.querySelector(".form-error");
+  form.addEventListener("submit", async e=>{
+    e.preventDefault();
+    if (errBox) errBox.classList.remove("show");
+    if (!validate(form)) {
+      if (errBox) { errBox.textContent = "Some fields need attention. They're marked in red below."; errBox.classList.add("show"); }
+      return;
+    }
+    const btn = form.querySelector('button[type="submit"]'); const label = btn.textContent;
+    btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      await send(form);
+      if (onDone) onDone(form);
+      if (success) { form.style.display = "none"; success.classList.add("show"); success.focus(); }
+    } catch(err) {
+      const msg = `Couldn't send right now. Check your connection and try again, or email ${CONFIG.clubEmail}.`;
+      if (errBox) { errBox.textContent = msg; errBox.classList.add("show"); }
+      else { const m = form.querySelector(".msg"); if (m) m.textContent = msg; }
+    } finally { btn.disabled = false; btn.textContent = label; }
+  });
+  if (againId) document.getElementById(againId).addEventListener("click", ()=>{
+    form.reset(); success.classList.remove("show"); form.style.display = "";
+    if (formId === "regForm") { fillPrograms(); updateSummary(); }
+    form.querySelector("input,select")?.focus();
+  });
+}
+wire("regForm", "regSuccess", "regAgain", form=>{
+  const name = form.player_first_name.value.trim();
+  document.getElementById("regSuccessText").textContent =
+    `${name} is registered. Welcome to the Stone Crabs. Watch your inbox for a confirmation with the schedule and payment details.`;
+});
+wire("contactForm", "contactSuccess", "contactAgain");
+wire("joinForm", null, null, form=>{
+  form.querySelector(".msg").textContent = "You're on the list. Season announcements will land in your inbox.";
+  form.reset();
+});
+updateSummary();
+</script>
+</body>
+</html>
